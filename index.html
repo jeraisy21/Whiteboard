@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js?ver=1.4.2"></script>
+<script type="text/javascript">		
+			
+        window.onload = function() {
+
+        		
+
+                var myCanvas = document.getElementById("myCanvas");
+                var curSize = document.getElementById('changePxl')
+                var curColor = $('#selectColor option:selected').val();
+                
+                
+
+                if(myCanvas){
+                                var isDown = false;
+                                var ctx = myCanvas.getContext("2d");
+                                var canvasX, canvasY;
+                                
+                                 
+                                $(myCanvas)
+                                .mousedown(function(e){
+                                                isDown = true;
+                                                ctx.beginPath();
+                                                canvasX = e.pageX - myCanvas.offsetLeft;
+                                                canvasY = e.pageY - myCanvas.offsetTop;
+                                                ctx.moveTo(canvasX, canvasY);
+                                })
+                                .mousemove(function(e){
+                                                if(isDown != false) {
+                                                        canvasX = e.pageX - myCanvas.offsetLeft;
+                                                        canvasY = e.pageY - myCanvas.offsetTop;
+                                                        ctx.lineTo(canvasX, canvasY);
+                                                        ctx.strokeStyle = curColor;
+                                                     	ctx.lineWidth = curSize;
+                                                        ctx.stroke();
+                                                }
+                                })
+                                .mouseup(function(e){
+                                                isDown = false;
+                                                ctx.closePath();
+                                });
+                };
+                 
+                $('#selectColor').change(function () {
+                                curColor = $('#selectColor option:selected').val();
+                });
+            
+            	$('#changePxl').change(function(){
+                         if $('#brush1'.selected) {
+                            ctx.lineWidth = 5;
+                         }                   
+                });
+
+               
+        };
+
+        		
+</script>
+
+
+<title>HTML5 Canvas Drawing Board | onlyWebPro.com</title>
+</head>
+<body>
+
+
+<style>
+body {
+        margin: 0;     
+}
+ 
+#board {
+        margin: 0 auto;
+        width: 720px;
+}
+ 
+#myCanvas {
+        border: 3px solid #000
+        
+}
+
+canvas:active {
+    cursor: crosshair;
+}
+
+</style>
+
+
+
+<div id="board">
+<canvas id="myCanvas" width="720x" height="500px">
+        Sorry, your browser doesn't support canvas technology.
+</canvas>
+<p>Color picker: <select id="selectColor">
+                  <option id="colBlack" value="black" selected="selected">Black</option>
+                  <option id="colRed" value="red">Red</option>
+                  <option id="colBlue" value="blue">Blue</option>
+                  <option id="colGreen" value="green">Green</option>
+                  <option id="colOrange" value="orange">Orange</option>
+                  <option id="colYellow" value="yellow">Yellow</option>
+</select><br/>
+
+
+<p>Pick a Brush:  <select id="changePxl">
+                  <option id="default">DEFAULT</option> 
+				  <option id="brush1">5px</option>
+				  <option id="brush2">20px</option>
+				  <option id="brush3">30px</option>
+				  
+</select>		
+	 
+</p>
+</div><!-- END board -->
+</body>
+</html>
